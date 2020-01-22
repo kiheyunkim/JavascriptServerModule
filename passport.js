@@ -1,11 +1,9 @@
-const express = require('express');
 const passport = require('passport');
 const googleStrategy = require('passport-google-oauth20').Strategy;
-const app = express();
 
-let Addpassport = ()=>{
-    //if(app !== require('express')())
-    //    throw new Error('not express module');
+let Addpassport = (app)=>{
+    if(require('express')() === undefined || app !== require('express')() )
+        throw new Error('not express module');
 
     app.use(passport.initialize());
     app.use(passport.session());
@@ -18,7 +16,7 @@ let Addpassport = ()=>{
 
     passport.use(new googleStrategy({
         clientID: '----',
-        clientSecret: '----,
+        clientSecret: '----',
         callbackURL: '----'
     },
     (accessToken, refreshToken, profile, done)=> {
@@ -63,4 +61,4 @@ let Addpassport = ()=>{
     })
 }
 
-Addpassport();
+exports.Addpassport = Addpassport;
